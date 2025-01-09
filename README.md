@@ -62,9 +62,9 @@ config.default_consent = "pending" # Set default consent status
 ### Event Controls
 Control which events are forwarded to LinkedIn CAPI:
 ```toml
-config.page_event_enabled = true   # Enable/disable page view tracking
+config.page_event_enabled = false   # Disable page view tracking as it doesn't exist on this component
 config.track_event_enabled = true  # Enable/disable custom event tracking
-config.user_event_enabled = true   # Enable/disable user identification
+config.user_event_enabled = false   # Disable page view tracking as it doesn't exist on this component
 ```
 
 ### Consent Management
