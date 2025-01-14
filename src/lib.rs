@@ -56,11 +56,11 @@ fn build_edgee_request(linkedin_payload: LinkedinPayload) -> EdgeeRequest {
         ),
     ];
 
-    let url = format!("https://api.linkedin.com/rest/conversionEvents");
+    let url = "https://api.linkedin.com/rest/conversionEvents";
 
     EdgeeRequest {
         method: HttpMethod::Post,
-        url,
+        url: url.to_string(),
         headers,
         body: serde_json::to_string(&linkedin_payload.data).unwrap(),
     }
