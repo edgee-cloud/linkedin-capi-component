@@ -1,5 +1,5 @@
-package edgee:gacomponent;
+package edgee:native;
 
 world data-collection {
-  export edgee:protocols/provider;
+  export edgee:protocols/data-collection;
 }
