@@ -3,7 +3,7 @@ use serde::Serialize;
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
 
-use crate::exports::edgee::protocols::provider::{Consent, Dict, Event};
+use crate::exports::edgee::protocols::data_collection::{Consent, Dict, Event};
 
 #[derive(Serialize, Debug, Default)]
 pub(crate) struct LinkedinPayload {
