@@ -5,7 +5,7 @@ use crate::exports::edgee::protocols::data_collection::{
 };
 use linkedin_payload::{LinkedinEvent, LinkedinPayload};
 
-wit_bindgen::generate!({world: "edgee", path: "wit", with: { "edgee:protocols/data-collection": generate }});
+wit_bindgen::generate!({world: "data-collection", path: "wit", generate_all});
 
 export!(LinkedinComponent);
 
