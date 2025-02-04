@@ -13,8 +13,8 @@ pub(crate) struct LinkedinPayload {
 }
 
 impl LinkedinPayload {
-    pub fn new(cred_map: Dict) -> anyhow::Result<Self> {
-        let cred: HashMap<String, String> = cred_map
+    pub fn new(settings: Dict) -> anyhow::Result<Self> {
+        let cred: HashMap<String, String> = settings
             .iter()
             .map(|(key, value)| (key.to_string(), value.to_string()))
             .collect();
