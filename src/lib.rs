@@ -12,17 +12,17 @@ export!(LinkedinComponent);
 struct LinkedinComponent;
 
 impl Guest for LinkedinComponent {
-    fn page(_edgee_event: Event, _cred_map: Dict) -> Result<EdgeeRequest, String> {
+    fn page(_edgee_event: Event, _settings: Dict) -> Result<EdgeeRequest, String> {
         Err("Page event not implemented for this component".to_string())
     }
 
-    fn track(edgee_event: Event, cred_map: Dict) -> Result<EdgeeRequest, String> {
+    fn track(edgee_event: Event, settings: Dict) -> Result<EdgeeRequest, String> {
         if let Data::Track(ref data) = edgee_event.data {
             if data.name.is_empty() {
                 return Err("Track name should be set to your conversion rule. ex: urn:lla:llaPartnerConversion:123".to_string());
             }
 
-            let mut linkedin_payload = LinkedinPayload::new(cred_map).map_err(|e| e.to_string())?;
+            let mut linkedin_payload = LinkedinPayload::new(settings).map_err(|e| e.to_string())?;
             let event =
                 LinkedinEvent::new(&edgee_event, data.name.as_str()).map_err(|e| e.to_string())?;
 
@@ -34,7 +34,7 @@ impl Guest for LinkedinComponent {
         }
     }
 
-    fn user(_edgee_event: Event, _cred_map: Dict) -> Result<EdgeeRequest, String> {
+    fn user(_edgee_event: Event, _settings: Dict) -> Result<EdgeeRequest, String> {
         Err("User event not implemented for this component".to_string())
     }
 }
@@ -62,6 +62,7 @@ fn build_edgee_request(linkedin_payload: LinkedinPayload) -> EdgeeRequest {
         method: HttpMethod::Post,
         url: url.to_string(),
         headers,
+        forward_client_headers: true,
         body: serde_json::to_string(&linkedin_payload.data).unwrap(),
     }
 }
