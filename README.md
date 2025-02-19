@@ -12,6 +12,10 @@
 
 <h1 align="center">LinkedIn CAPI Component for Edgee</h1>
 
+[![Coverage Status](https://coveralls.io/repos/github/edgee-cloud/linkedin-capi-component/badge.svg)](https://coveralls.io/github/edgee-cloud/linkedin-capi-component)
+[![GitHub issues](https://img.shields.io/github/issues/edgee-cloud/linkedin-capi-component.svg)](https://github.com/edgee-cloud/linkedin-capi-component/issues)
+[![Edgee Component Registry](https://img.shields.io/badge/Edgee_Component_Registry-Public-green.svg)](https://www.edgee.cloud/edgee/linkedin-capi)
+
 This component implements the data collection protocol between [Edgee](https://www.edgee.cloud) and [LinkedIn CAPI](https://learn.microsoft.com/en-us/linkedin/marketing/integrations/ads-reporting/conversions-api).
 
 ## Quick Start
