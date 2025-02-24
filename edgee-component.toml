@@ -1,0 +1,25 @@
+manifest-version = 1
+
+[component]
+name = "Linkedin Capi"
+version = "0.7.0"
+category = "data-collection"
+subcategory = "analytics"
+description = """
+With Conversions API, you can connect both your online and offline data to LinkedIn so you can see how your campaigns influenced actions taken on your website,
+sales completed over the phone, or leads collected in-person at an event.
+"""
+documentation = "https://www.edgee.cloud/docs/components/data-collection/linkedin-capi"
+repository = "https://github.com/edgee-cloud/linkedin-capi-component"
+wit-world-version = "0.4.0"
+
+[component.build]
+command = "cargo build --target wasm32-wasip2 --release && cp ./target/wasm32-wasip2/release/linkedin_capi_component.wasm linkedin_capi.wasm"
+output_path = "linkedin_capi.wasm"
+
+[component.settings.linkedin_access_token]
+title = "Linkedin Access Token"
+type = "string"
+required = true
+description = "The access token for your Linkedin account"
+
