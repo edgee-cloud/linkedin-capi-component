@@ -1,6 +1,6 @@
 mod linkedin_payload;
 
-use crate::exports::edgee::protocols::data_collection::{
+use crate::exports::edgee::components::data_collection::{
     Data, Dict, EdgeeRequest, Event, Guest, HttpMethod,
 };
 use linkedin_payload::{LinkedinEvent, LinkedinPayload};
@@ -70,10 +70,10 @@ fn build_edgee_request(linkedin_payload: LinkedinPayload) -> EdgeeRequest {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::exports::edgee::protocols::data_collection::{
+    use crate::exports::edgee::components::data_collection::{
         Campaign, Client, Context, EventType, PageData, Session, TrackData, UserData,
     };
-    use exports::edgee::protocols::data_collection::Consent;
+    use exports::edgee::components::data_collection::Consent;
     use pretty_assertions::assert_eq;
     use uuid::Uuid;
 
