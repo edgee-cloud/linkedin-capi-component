@@ -4,7 +4,7 @@ manifest-version = 1
 name = "Linkedin Capi"
 version = "0.8.0"
 category = "data-collection"
-subcategory = "analytics"
+subcategory = "conversion-api"
 description = """
 With Conversions API, you can connect both your online and offline data to LinkedIn so you can see how your campaigns influenced actions taken on your website,
 sales completed over the phone, or leads collected in-person at an event.
