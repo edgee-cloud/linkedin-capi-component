@@ -12,6 +12,7 @@ sales completed over the phone, or leads collected in-person at an event.
 documentation = "https://www.edgee.cloud/docs/components/data-collection/linkedin-capi"
 repository = "https://github.com/edgee-cloud/linkedin-capi-component"
 wit-world-version = "0.5.0"
+icon-path = "linkedin.png"
 
 [component.build]
 command = "cargo build --target wasm32-wasip2 --release && cp ./target/wasm32-wasip2/release/linkedin_capi_component.wasm linkedin_capi.wasm"
