@@ -21,10 +21,16 @@ impl Guest for LinkedinComponent {
             if data.name.is_empty() {
                 return Err("Track name should be set to your conversion rule. ex: urn:lla:llaPartnerConversion:123".to_string());
             }
-
             let mut linkedin_payload = LinkedinPayload::new(settings).map_err(|e| e.to_string())?;
-            let event =
-                LinkedinEvent::new(&edgee_event, data.name.as_str()).map_err(|e| e.to_string())?;
+            let event_id = data
+                .properties
+                .iter()
+                .find(|(key, _)| key == "event_id")
+                .map(|(_, id)| id)
+                .unwrap_or(&edgee_event.uuid);
+
+            let event = LinkedinEvent::new(&edgee_event, data.name.as_str(), event_id)
+                .map_err(|e| e.to_string())?;
 
             linkedin_payload.data = event;
 
@@ -49,7 +55,7 @@ fn build_edgee_request(linkedin_payload: LinkedinPayload) -> EdgeeRequest {
             String::from("X-Restli-Protocol-Version"),
             String::from("2.0.0"),
         ),
-        (String::from("LinkedIn-Version"), String::from("202411")),
+        (String::from("LinkedIn-Version"), String::from("202506")),
         (
             String::from("Authorization"),
             format!("Bearer {}", linkedin_payload.access_token),

@@ -71,12 +71,13 @@ pub struct UserId {
 }
 
 impl LinkedinEvent {
-    pub fn new(edgee_event: &Event, event_name: &str) -> anyhow::Result<Self> {
+    pub fn new(edgee_event: &Event, event_name: &str, event_id: &str) -> anyhow::Result<Self> {
         // Default LinkedIn event
+
         let mut linkedin_event = LinkedinEvent {
             conversion: event_name.to_string(),
             event_time: edgee_event.timestamp_millis,
-            event_id: edgee_event.uuid.clone(),
+            event_id: event_id.to_string(),
             user_data: UserData::default(),
         };
 
