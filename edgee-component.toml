@@ -24,4 +24,3 @@ title = "Linkedin Access Token"
 type = "string"
 required = true
 description = "The access token for your Linkedin account"
-
