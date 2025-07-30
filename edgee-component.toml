@@ -2,7 +2,7 @@ manifest-version = 1
 
 [component]
 name = "Linkedin Capi"
-version = "1.0.1"
+version = "1.2.0"
 category = "data-collection"
 subcategory = "conversion-api"
 description = """
