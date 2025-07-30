@@ -21,6 +21,7 @@ impl Guest for LinkedinComponent {
             if data.name.is_empty() {
                 return Err("Track name should be set to your conversion rule. ex: urn:lla:llaPartnerConversion:123".to_string());
             }
+
             let mut linkedin_payload = LinkedinPayload::new(settings).map_err(|e| e.to_string())?;
             let event_id = data
                 .properties
@@ -29,7 +30,8 @@ impl Guest for LinkedinComponent {
                 .map(|(_, id)| id)
                 .unwrap_or(&edgee_event.uuid);
 
-            let event = LinkedinEvent::new(&edgee_event, data.name.as_str(), event_id)
+            let lit_fat_id = edgee_event.context.page.search.split("lit_fat_id=").nth(1);
+            let event = LinkedinEvent::new(&edgee_event, data.name.as_str(), event_id, lit_fat_id)
                 .map_err(|e| e.to_string())?;
 
             linkedin_payload.data = event;
