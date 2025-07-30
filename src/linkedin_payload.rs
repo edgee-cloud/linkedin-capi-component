@@ -71,7 +71,12 @@ pub struct UserId {
 }
 
 impl LinkedinEvent {
-    pub fn new(edgee_event: &Event, event_name: &str, event_id: &str) -> anyhow::Result<Self> {
+    pub fn new(
+        edgee_event: &Event,
+        event_name: &str,
+        event_id: &str,
+        lit_fat_id: Option<&str>,
+    ) -> anyhow::Result<Self> {
         // Default LinkedIn event
 
         let mut linkedin_event = LinkedinEvent {
@@ -96,6 +101,13 @@ impl LinkedinEvent {
         user_data
             .external_ids
             .push(edgee_event.context.user.user_id.clone());
+
+        user_data
+            .user_ids
+            .extend(lit_fat_id.into_iter().map(|id| UserId {
+                id_type: "LINKEDIN_FIRST_PARTY_ADS_TRACKING_UUID".to_owned(),
+                id_value: id.to_string(),
+            }));
 
         for (key, value) in user_properties.iter() {
             match key.as_str() {
