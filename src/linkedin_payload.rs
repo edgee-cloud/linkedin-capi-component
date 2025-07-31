@@ -75,7 +75,7 @@ impl LinkedinEvent {
         edgee_event: &Event,
         event_name: &str,
         event_id: &str,
-        lit_fat_id: Option<&str>,
+        li_fat_id: Option<&str>,
     ) -> anyhow::Result<Self> {
         // Default LinkedIn event
 
@@ -91,21 +91,14 @@ impl LinkedinEvent {
         };
 
         let user_properties = edgee_event.context.user.properties.clone();
-
-        // user properties
-        // You must provide at least one of the following user property.
-        if user_properties.is_empty() {
-            return Err(anyhow!("User properties are empty"));
-        }
-
         user_data
             .external_ids
             .push(edgee_event.context.user.user_id.clone());
 
-        user_data.user_ids.extend(lit_fat_id.map(|id| UserId {
+        user_data.user_ids.push(UserId {
             id_type: "LINKEDIN_FIRST_PARTY_ADS_TRACKING_UUID".to_owned(),
-            id_value: id.to_string(),
-        }));
+            id_value: li_fat_id.unwrap_or("").to_string(),
+        });
 
         for (key, value) in user_properties.iter() {
             match key.as_str() {
@@ -141,4 +134,57 @@ pub(crate) fn hash_value(input: &str) -> String {
     let mut hasher = Sha256::new();
     hasher.update(input.as_bytes());
     format!("{:x}", hasher.finalize())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_hash_value() {
+        let input = "test@example.com";
+        let expected = "973dfe463ec85785f5f95af5ba3906eedb2d931c24e69824a89ea65dba4e813b";
+        assert_eq!(hash_value(input), expected);
+    }
+
+    #[test]
+    fn test_hash_value_empty_string() {
+        let input = "";
+        let expected = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+        assert_eq!(hash_value(input), expected);
+    }
+
+    #[test]
+    fn test_linkedin_payload_new_success() {
+        let settings = vec![(
+            "linkedin_access_token".to_string(),
+            "test_token".to_string(),
+        )];
+
+        let payload = LinkedinPayload::new(settings).unwrap();
+        assert_eq!(payload.access_token, "test_token");
+    }
+
+    #[test]
+    fn test_linkedin_payload_new_missing_token() {
+        let settings = vec![];
+
+        let result = LinkedinPayload::new(settings);
+        assert!(result.is_err());
+        assert!(result
+            .unwrap_err()
+            .to_string()
+            .contains("Missing LinkedIn Access Token"));
+    }
+
+    #[test]
+    fn test_user_id_creation() {
+        let user_id = UserId {
+            id_type: "SHA256_EMAIL".to_owned(),
+            id_value: "hashed_email".to_owned(),
+        };
+
+        assert_eq!(user_id.id_type, "SHA256_EMAIL");
+        assert_eq!(user_id.id_value, "hashed_email");
+    }
 }
