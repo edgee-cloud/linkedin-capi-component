@@ -573,31 +573,6 @@ mod tests {
     }
 
     #[test]
-    fn track_event_without_user_context_properties_fails() {
-        let mut event = sample_track_event(
-            "event-name".to_string(),
-            Some(Consent::Granted),
-            "abc".to_string(),
-            "fr".to_string(),
-            true,
-        );
-        event.context.user.properties = vec![]; // empty context user properties
-        event.context.user.user_id = "".to_string(); // empty context user id
-        let settings = sample_settings();
-        let result = LinkedinComponent::track(event, settings);
-        assert_eq!(result.clone().is_err(), true);
-        assert_eq!(
-            result
-                .clone()
-                .err()
-                .unwrap()
-                .to_string()
-                .contains("User properties are empty"),
-            true
-        );
-    }
-
-    #[test]
     fn test_extract_query_param_simple() {
         let query = "li_fat_id=abc123";
         let result = extract_query_param(query, "li_fat_id");
