@@ -30,8 +30,8 @@ impl Guest for LinkedinComponent {
                 .map(|(_, id)| id)
                 .unwrap_or(&edgee_event.uuid);
 
-            let lit_fat_id = edgee_event.context.page.search.split("lit_fat_id=").nth(1);
-            let event = LinkedinEvent::new(&edgee_event, data.name.as_str(), event_id, lit_fat_id)
+            let li_fat_id = extract_query_param(&edgee_event.context.page.search, "li_fat_id");
+            let event = LinkedinEvent::new(&edgee_event, data.name.as_str(), event_id, li_fat_id)
                 .map_err(|e| e.to_string())?;
 
             linkedin_payload.data = event;
@@ -45,6 +45,20 @@ impl Guest for LinkedinComponent {
     fn user(_edgee_event: Event, _settings: Dict) -> Result<EdgeeRequest, String> {
         Err("User event not implemented for this component".to_string())
     }
+}
+
+/// Extract a specific query parameter from a URL query string
+fn extract_query_param<'a>(query_string: &'a str, param_name: &'a str) -> Option<&'a str> {
+    query_string.split('&').find_map(|pair| {
+        let mut parts = pair.split('=');
+        let key = parts.next()?;
+        let value = parts.next()?;
+        if key == param_name {
+            Some(value)
+        } else {
+            None
+        }
+    })
 }
 
 fn build_edgee_request(linkedin_payload: LinkedinPayload) -> EdgeeRequest {
@@ -581,5 +595,61 @@ mod tests {
                 .contains("User properties are empty"),
             true
         );
+    }
+
+    #[test]
+    fn test_extract_query_param_simple() {
+        let query = "li_fat_id=abc123";
+        let result = extract_query_param(query, "li_fat_id");
+        assert_eq!(result, Some("abc123"));
+    }
+
+    #[test]
+    fn test_extract_query_param_multiple_params() {
+        let query = "param1=value1&li_fat_id=xyz789&param2=value2";
+        let result = extract_query_param(query, "li_fat_id");
+        assert_eq!(result, Some("xyz789"));
+    }
+
+    #[test]
+    fn test_extract_query_param_first_param() {
+        let query = "li_fat_id=first&param2=second&param3=third";
+        let result = extract_query_param(query, "li_fat_id");
+        assert_eq!(result, Some("first"));
+    }
+
+    #[test]
+    fn test_extract_query_param_last_param() {
+        let query = "param1=first&param2=second&li_fat_id=last";
+        let result = extract_query_param(query, "li_fat_id");
+        assert_eq!(result, Some("last"));
+    }
+
+    #[test]
+    fn test_extract_query_param_not_found() {
+        let query = "param1=value1&param2=value2";
+        let result = extract_query_param(query, "li_fat_id");
+        assert_eq!(result, None);
+    }
+
+    #[test]
+    fn test_extract_query_param_empty_string() {
+        let query = "";
+        let result = extract_query_param(query, "li_fat_id");
+        assert_eq!(result, None);
+    }
+
+    #[test]
+    fn test_extract_query_param_empty_value() {
+        let query = "li_fat_id=&param2=value2";
+        let result = extract_query_param(query, "li_fat_id");
+        assert_eq!(result, Some(""));
+    }
+
+    #[test]
+    fn test_extract_query_param_special_characters() {
+        let query = "li_fat_id=abc-123_xyz&other=test";
+        let result = extract_query_param(query, "li_fat_id");
+        assert_eq!(result, Some("abc-123_xyz"));
     }
 }
