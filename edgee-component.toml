@@ -6,8 +6,43 @@ version = "1.2.3"
 category = "data-collection"
 subcategory = "conversion-api"
 description = """
-With Conversions API, you can connect both your online and offline data to LinkedIn so you can see how your campaigns influenced actions taken on your website,
-sales completed over the phone, or leads collected in-person at an event.
+# LinkedIn CAPI Component
+
+[https://www.edgee.cloud/edgee/linkedin-capi](https://www.edgee.cloud/edgee/linkedin-capi)
+
+## Overview
+
+The **LinkedIn Conversions API (CAPI)** component by Edgee enables seamless server-side integration of LinkedIn CAPI into your Edgee project.
+This integration allows you to send both online and offline conversion events directly to LinkedIn, enhancing the accuracy and reliability of your campaign tracking—even in the face of browser limitations and ad blockers.
+
+---
+
+## 🔑 Key Features & Benefits
+
+### Features
+
+- **Server-Side Event Tracking**: Capture and send user interactions from your server to LinkedIn, bypassing client-side restrictions.
+- **Enhanced Data Accuracy**: Improve event matching and deduplication, leading to more reliable campaign performance insights.
+- **Privacy Compliance**: Align with data privacy regulations by reducing reliance on cookies and client-side tracking.
+- **Edge Deployment**: Deploy the component at the edge for low-latency data processing and transmission.
+
+### Benefits
+
+- **Improved Campaign Performance**: Gain a more comprehensive view of your campaign effectiveness with accurate conversion data.
+- **Reduced Data Loss**: Mitigate data loss due to browser restrictions or ad blockers.
+- **Scalable Integration**: Easily scale your conversion tracking as your infrastructure grows.
+
+---
+
+## 🛠️ Use Cases
+
+- **E-commerce Platforms**: Track purchases and cart additions to optimize product offerings.
+- **Lead Generation Campaigns**: Monitor form submissions and sign-ups to refine targeting strategies.
+- **Event-Based Conversions**: Capture offline conversions such as phone calls or in-person interactions.
+
+---
+
+Additional resources: [LinkedIn Conversions API](https://www.linkedin.com/help/lms/answer/a427660)
 """
 documentation = "https://www.edgee.cloud/docs/components/data-collection/linkedin-capi"
 repository = "https://github.com/edgee-cloud/linkedin-capi-component"
