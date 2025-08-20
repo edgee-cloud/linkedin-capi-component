@@ -6,10 +6,6 @@ version = "1.2.3"
 category = "data-collection"
 subcategory = "conversion-api"
 description = """
-# LinkedIn CAPI Component
-
-[https://www.edgee.cloud/edgee/linkedin-capi](https://www.edgee.cloud/edgee/linkedin-capi)
-
 ## Overview
 
 The **LinkedIn Conversions API (CAPI)** component by Edgee enables seamless server-side integration of LinkedIn CAPI into your Edgee project.
@@ -34,7 +30,7 @@ This integration allows you to send both online and offline conversion events di
 
 ---
 
-## 🛠️ Use Cases
+## Use Cases
 
 - **E-commerce Platforms**: Track purchases and cart additions to optimize product offerings.
 - **Lead Generation Campaigns**: Monitor form submissions and sign-ups to refine targeting strategies.
